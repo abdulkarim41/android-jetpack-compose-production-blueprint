@@ -1,11 +1,10 @@
 plugins {
-    //alias(libs.plugins.android.application)
-    //alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.iamkarim.android.application.compose)
 }
 
 android {
     namespace = "com.abdulkarim.android_jetpack_compose"
+
     compileSdk {
         version = release(36)
     }
