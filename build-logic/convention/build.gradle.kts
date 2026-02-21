@@ -20,21 +20,22 @@ kotlin {
 
 dependencies {
     compileOnly(libs.android.gradleApiPlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
 }
 
 gradlePlugin {
     plugins {
         register("androidApplicationConvention") {
-            id = "iamkarim.android.application"
+            id = libs.plugins.iamkarim.android.application.asProvider().get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidApplicationComposeConvention") {
-            id = "iamkarim.android.application.compose"
+            id = libs.plugins.iamkarim.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
         register("jvmLibraryConvention") {
-            id = "iamkarim.jvm.library"
+            id = libs.plugins.iamkarim.jvm.library.get().pluginId
             implementationClass = "JvmLibraryConventionPlugin"
         }
     }
