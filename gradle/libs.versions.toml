@@ -48,6 +48,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 
 iamkarim-android-application = { id = "iamkarim.android.application" }
 iamkarim-android-application-compose = { id = "iamkarim.android.application.compose" }
+iamkarim-android-library = { id = "iamkarim.android.library" }
 iamkarim-jvm-library = { id = "iamkarim.jvm.library" }
 
 
