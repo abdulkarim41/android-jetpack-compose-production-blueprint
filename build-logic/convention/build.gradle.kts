@@ -21,6 +21,7 @@ kotlin {
 dependencies {
     compileOnly(libs.android.gradleApiPlugin)
     compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
 }
 
@@ -33,6 +34,10 @@ gradlePlugin {
         register("androidApplicationComposeConvention") {
             id = libs.plugins.iamkarim.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
+        register("androidFeatureConvention") {
+            id = libs.plugins.iamkarim.android.feature.get().pluginId
+            implementationClass = "AndroidFeatureConventionPlugin"
         }
         register("androidLibraryComposeConvention") {
             id = libs.plugins.iamkarim.android.library.compose.get().pluginId
