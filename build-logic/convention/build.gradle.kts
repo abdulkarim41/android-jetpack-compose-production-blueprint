@@ -46,6 +46,10 @@ gradlePlugin {
             id = libs.plugins.iamkarim.jvm.library.get().pluginId
             implementationClass = "JvmLibraryConventionPlugin"
         }
+        register("androidHiltConvention") {
+            id = libs.plugins.iamkarim.android.hilt.get().pluginId
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
 
