@@ -26,3 +26,4 @@ rootProject.name = "android-jetpack-compose-production-blueprint"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core:common")
+include(":feature:posts")
