@@ -30,6 +30,7 @@ dependencies {
 
     implementation(projects.core.common)
     implementation(projects.core.designSystem)
+    implementation(projects.core.ui)
 
     implementation(projects.feature.posts)
 

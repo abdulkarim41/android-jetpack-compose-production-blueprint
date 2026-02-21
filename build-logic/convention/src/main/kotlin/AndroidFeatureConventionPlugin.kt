@@ -12,18 +12,13 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             apply(plugin = "iamkarim.android.hilt")
 
             dependencies {
-                //"implementation"(project(":core:ui"))
-                //"implementation"(project(":core:designsystem"))
+                "implementation"(project(":core:ui"))
+                "implementation"(project(":core:design-system"))
 
                 "implementation"(libs.findLibrary("androidx.lifecycle.runtime.compose").get())
                 "implementation"(libs.findLibrary("androidx.lifecycle.viewmodel.compose").get())
                 "implementation"(libs.findLibrary("androidx.hilt.lifecycle.viewmodel.compose").get())
                 "implementation"(libs.findLibrary("androidx.navigation3.runtime").get())
-                //"implementation"(libs.findLibrary("androidx.tracing.ktx").get())
-
-//                "androidTestImplementation"(
-//                    libs.findLibrary("androidx.lifecycle.runtimeTesting").get(),
-//                )
             }
         }
     }
