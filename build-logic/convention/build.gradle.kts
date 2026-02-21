@@ -34,8 +34,12 @@ gradlePlugin {
             id = libs.plugins.iamkarim.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+        register("androidLibraryComposeConvention") {
+            id = libs.plugins.iamkarim.android.library.compose.get().pluginId
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
         register("androidLibraryConvention") {
-            id = libs.plugins.iamkarim.android.library.get().pluginId
+            id = libs.plugins.iamkarim.android.library.asProvider().get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("jvmLibraryConvention") {
