@@ -1,18 +1,13 @@
 plugins {
+    alias(libs.plugins.iamkarim.android.application)
     alias(libs.plugins.iamkarim.android.application.compose)
 }
 
 android {
     namespace = "com.abdulkarim.android_jetpack_compose"
 
-    compileSdk {
-        version = release(36)
-    }
-
     defaultConfig {
         applicationId = "com.abdulkarim.android_jetpack_compose"
-        minSdk = 27
-        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
