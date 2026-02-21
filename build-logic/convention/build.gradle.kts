@@ -33,6 +33,10 @@ gradlePlugin {
             id = "iamkarim.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+        register("jvmLibraryConvention") {
+            id = "iamkarim.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }
 
