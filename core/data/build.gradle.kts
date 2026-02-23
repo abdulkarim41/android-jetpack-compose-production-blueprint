@@ -11,6 +11,7 @@ android {
 dependencies {
     api(projects.core.common)
     api(projects.core.domain)
+    api(projects.core.di)
     api(projects.core.model.entity)
     api(projects.core.model.apiresponse)
 
