@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.iamkarim.android.application)
     alias(libs.plugins.iamkarim.android.application.compose)
+    alias(libs.plugins.iamkarim.android.hilt)
 }
 
 android {
