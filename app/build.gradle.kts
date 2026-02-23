@@ -35,6 +35,9 @@ dependencies {
     implementation(projects.core.designSystem)
     implementation(projects.core.ui)
 
+    implementation(projects.core.model.apiresponse)
+    implementation(projects.core.model.entity)
+
     implementation(projects.feature.posts)
 
     implementation(libs.androidx.core.ktx)
