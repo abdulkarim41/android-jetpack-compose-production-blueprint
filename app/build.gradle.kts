@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.iamkarim.android.application)
     alias(libs.plugins.iamkarim.android.application.compose)
     alias(libs.plugins.iamkarim.android.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -41,6 +42,8 @@ dependencies {
 
     implementation(projects.feature.posts)
 
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

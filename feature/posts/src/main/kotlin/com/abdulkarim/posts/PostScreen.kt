@@ -123,7 +123,7 @@ fun ErrorView(message: String, onRetry: () -> Unit) {
         Text(text = message, color = Color.Red, textAlign = TextAlign.Center)
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = onRetry) {
-            Text("পুনরায় চেষ্টা করুন")
+            Text("retry")
         }
     }
 }
