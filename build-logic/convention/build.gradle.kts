@@ -47,6 +47,10 @@ gradlePlugin {
             id = libs.plugins.iamkarim.android.library.asProvider().get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidRetrofitConvention") {
+            id = libs.plugins.iamkarim.android.retrofit.get().pluginId
+            implementationClass = "AndroidRetrofitConventionPlugin"
+        }
         register("jvmLibraryConvention") {
             id = libs.plugins.iamkarim.jvm.library.get().pluginId
             implementationClass = "JvmLibraryConventionPlugin"

@@ -90,6 +90,7 @@ iamkarim-android-application-compose = { id = "iamkarim.android.application.comp
 iamkarim-android-feature = { id = "iamkarim.android.feature" }
 iamkarim-android-library-compose = { id = "iamkarim.android.library.compose" }
 iamkarim-android-library = { id = "iamkarim.android.library" }
+iamkarim-android-retrofit = { id = "iamkarim.android.retrofit" }
 iamkarim-android-hilt = { id = "iamkarim.android.hilt" }
 iamkarim-jvm-library = { id = "iamkarim.jvm.library" }
 
