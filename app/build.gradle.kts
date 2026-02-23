@@ -34,6 +34,7 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.designSystem)
     implementation(projects.core.ui)
+    implementation(projects.core.di)
 
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)

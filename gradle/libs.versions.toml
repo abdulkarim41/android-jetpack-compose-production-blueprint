@@ -7,7 +7,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.4"
 kotlin = "2.3.10"
-hilt = "2.59.1"
+hilt = "2.59.2"
 composeBom = "2026.02.00"
 androidDesugarJdkLibs = "2.1.5"
 appcompat = "1.7.1"
@@ -19,6 +19,7 @@ androidxNavigation3 = "1.0.1"
 androidxComposeFoundation = "1.10.3"
 androidxComposeMaterial3Adaptive = "1.2.0"
 kotlinxCoroutines = "1.10.2"
+timber = "5.0.1"
 
 # Network
 retrofit = "3.0.0"
@@ -80,6 +81,7 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+log-timber = {group = "com.jakewharton.timber", name = "timber", version.ref="timber"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
