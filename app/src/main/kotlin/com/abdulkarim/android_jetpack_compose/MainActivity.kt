@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.abdulkarim.android_jetpack_compose.navigation.AppNavigation
-import com.abdulkarim.android_jetpack_compose.ui.theme.AndroidjetpackcomposeproductionblueprintTheme
+import com.abdulkarim.desingsystem.theme.AndroidjetpackcomposeproductionblueprintTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

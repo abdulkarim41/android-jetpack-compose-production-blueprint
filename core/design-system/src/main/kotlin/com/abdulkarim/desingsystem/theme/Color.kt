@@ -1,4 +1,4 @@
-package com.abdulkarim.android_jetpack_compose.ui.theme
+package com.abdulkarim.desingsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
