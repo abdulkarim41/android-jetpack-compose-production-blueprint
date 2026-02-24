@@ -9,3 +9,8 @@ object PostListScreenRoute
 data class PostDetailScreenRoute(val postId: String)
 @Serializable
 object LoginScreenRoute
+@Serializable
+object SplashScreenRoute
+@Serializable
+object OnboardingScreenRoute
+

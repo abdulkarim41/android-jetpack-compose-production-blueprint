@@ -30,6 +30,7 @@ android {
 
 dependencies {
 
+    implementation(projects.featureCredential.splash)
     implementation(projects.featureCredential.onboarding)
     implementation(projects.featureCredential.login)
 
