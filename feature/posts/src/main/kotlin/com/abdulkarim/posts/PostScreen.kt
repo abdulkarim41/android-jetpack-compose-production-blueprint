@@ -128,6 +128,17 @@ fun ErrorView(message: String, onRetry: () -> Unit) {
     }
 }
 
+@Composable
+fun DetailsScreen(postId: String) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = " $postId Details Screen",textAlign = TextAlign.Center)
+    }
+}
+
 @Preview
 @Composable
 fun PostListPreview() {

@@ -30,6 +30,8 @@ android {
 
 dependencies {
 
+    implementation(projects.featureCredential.login)
+
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.domain)
@@ -40,7 +42,9 @@ dependencies {
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)
 
+
     implementation(projects.feature.posts)
+
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
