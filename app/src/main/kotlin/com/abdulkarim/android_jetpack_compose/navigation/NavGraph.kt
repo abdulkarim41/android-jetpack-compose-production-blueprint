@@ -5,43 +5,63 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.abdulkarim.login.LoginScreen
-import com.abdulkarim.posts.DetailsScreen
+import com.abdulkarim.onboarding.OnboardingScreen
 import com.abdulkarim.posts.PostListScreen
+import com.abdulkarim.splash.SplashScreen
 
 @Composable
 fun AppNavigation(
-    startDestination: Any,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    startDestination: Any = Screen.Splash
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable<LoginScreenRoute> {
-            LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(PostListScreenRoute) {
-                        popUpTo<LoginScreenRoute> { inclusive = true }
+        composable<Screen.Splash> {
+            SplashScreen(
+                navigateToOnboarding = {
+                    navController.navigate(Screen.Onboarding) {
+                        popUpTo<Screen.Splash> { inclusive = true }
+                    }
+                },
+                navigateToHome = {
+                    navController.navigate(Screen.Home) {
+                        popUpTo<Screen.Home> { inclusive = true }
+                    }
+                },
+                navigateToLogin = {
+                    navController.navigate(Screen.Login) {
+                        popUpTo<Screen.Login> { inclusive = true }
                     }
                 }
             )
         }
 
+        composable<Screen.Onboarding> {
+            OnboardingScreen(onFinish = {
+                navController.navigate(Screen.Login) {
+                    popUpTo<Screen.Onboarding> { inclusive = true }
+                }
+            })
+        }
 
-        composable<PostListScreenRoute> {
+        composable<Screen.Login> {
+            LoginScreen(onLoginSuccess = {
+                navController.navigate(Screen.Home) {
+                    popUpTo<Screen.Login> { inclusive = true }
+                }
+            })
+        }
+
+        composable<Screen.Home> {
             PostListScreen(
                 onPostClick = { item ->
-                    navController.navigate(PostDetailScreenRoute(item.id))
+                    navController.navigate(Screen.PostDetailScreenRoute(item.id))
                 }
             )
         }
-        composable<PostDetailScreenRoute> { backStackEntry ->
-            val route: PostDetailScreenRoute = backStackEntry.toRoute()
-            DetailsScreen(postId = route.postId)
-        }
-
     }
 }
 
