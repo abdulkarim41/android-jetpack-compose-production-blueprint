@@ -14,10 +14,18 @@ object ApiServicesModule {
 
     @Provides
     @Singleton
-    fun providePostApiService(
+    fun provideAuthApiService(
         @AppBaseUrl retrofit: Retrofit,
-    ): PostApiService {
-        return retrofit.create(PostApiService::class.java)
+    ): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
     }
+
+//    @Provides
+//    @Singleton
+//    fun providePostApiService(
+//        @AppBaseUrl retrofit: Retrofit,
+//    ): PostApiService {
+//        return retrofit.create(PostApiService::class.java)
+//    }
 
 }

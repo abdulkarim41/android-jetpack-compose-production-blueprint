@@ -25,6 +25,9 @@ android {
             )
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
 
 }
 
@@ -45,8 +48,10 @@ dependencies {
     implementation(projects.core.model.entity)
 
 
-    implementation(projects.feature.posts)
+    //implementation(projects.feature.posts)
 
+
+    implementation(libs.log.timber)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)

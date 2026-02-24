@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.abdulkarim.login.LoginScreen
 import com.abdulkarim.onboarding.OnboardingScreen
-import com.abdulkarim.posts.PostListScreen
+//import com.abdulkarim.posts.PostListScreen
 import com.abdulkarim.splash.SplashScreen
 
 @Composable
@@ -49,19 +49,19 @@ fun AppNavigation(
 
         composable<Screen.Login> {
             LoginScreen(onLoginSuccess = {
-                navController.navigate(Screen.Home) {
-                    popUpTo<Screen.Login> { inclusive = true }
-                }
+//                navController.navigate(Screen.Home) {
+//                    popUpTo<Screen.Login> { inclusive = true }
+//                }
             })
         }
 
-        composable<Screen.Home> {
-            PostListScreen(
-                onPostClick = { item ->
-                    navController.navigate(Screen.PostDetailScreenRoute(item.id))
-                }
-            )
-        }
+//        composable<Screen.Home> {
+//            PostListScreen(
+//                onPostClick = { item ->
+//                    navController.navigate(Screen.PostDetailScreenRoute(item.id))
+//                }
+//            )
+//        }
     }
 }
 

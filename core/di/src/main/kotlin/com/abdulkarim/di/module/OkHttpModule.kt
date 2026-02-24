@@ -36,6 +36,13 @@ object OkHttpModule {
             .writeTimeout(timeOut.toLong(), TimeUnit.SECONDS)
 
         httpClient.addInterceptor(loggerInterceptor)
+        httpClient.addInterceptor { chain ->
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+                .addHeader("Accept", "application/json")
+            val request = requestBuilder.build()
+            chain.proceed(request)
+        }
 
         return httpClient.build()
     }

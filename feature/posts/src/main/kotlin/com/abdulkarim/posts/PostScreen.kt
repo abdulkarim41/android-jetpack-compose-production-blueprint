@@ -45,7 +45,9 @@ fun PostListScreen(
                 val error = state as Result.Error
                 ErrorView(
                     message = error.message,
-                    onRetry = { viewModel.fetchPosts() }
+                    onRetry = {
+                        //viewModel.fetchPosts()
+                    }
                 )
             }
             is Result.Success -> {

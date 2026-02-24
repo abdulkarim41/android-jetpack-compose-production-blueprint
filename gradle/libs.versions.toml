@@ -72,6 +72,7 @@ android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs
 hilt-android = {group = "com.google.dagger", name = "hilt-android", version.ref="hilt"}
 hilt-compiler = {group = "com.google.dagger", name = "hilt-android-compiler", version.ref="hilt"}
 
+
 # ---------- Network ----------
 retrofit-core = {group = "com.squareup.retrofit2", name = "retrofit", version.ref="retrofit"}
 retrofit-adapter-rx3 = {group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref="retrofit"}

@@ -23,9 +23,9 @@ class PostViewModel @Inject constructor(
 
     fun fetchPosts() {
         viewModelScope.launch {
-            fetchPostsApiUseCase.execute().collect { result ->
-                _postState.value = result
-            }
+//            fetchPostsApiUseCase.execute().collect { result ->
+//                _postState.value = result
+//            }
         }
     }
 }

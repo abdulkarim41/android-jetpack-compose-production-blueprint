@@ -23,11 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.abdulkarim.domain.apiusecase.auth.PostLoginApiUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel(),
     onLoginSuccess: () -> Unit
 ) {
     var email by rememberSaveable { mutableStateOf("") }
@@ -73,14 +76,21 @@ fun LoginScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        isLoading = true
-                        delay(1500)
+//                        isLoading = true
+//                        delay(1500)
+//
+//                        if (email.isNotBlank() && password.isNotBlank()) {
+//                            //onLoginSuccess()
+//                        }
+//
+//                        isLoading = false
 
-                        if (email.isNotBlank() && password.isNotBlank()) {
-                            onLoginSuccess()
-                        }
-
-                        isLoading = false
+                        viewModel.action(LoginUiAction.PostLoginApiAction(
+                            PostLoginApiUseCase.Params(
+                                username = "emilys",
+                                password = "emilyspass"
+                            )
+                        ))
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),

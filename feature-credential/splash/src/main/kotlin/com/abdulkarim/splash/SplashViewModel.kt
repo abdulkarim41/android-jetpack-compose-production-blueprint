@@ -23,11 +23,17 @@ class SplashViewModel @Inject constructor() : ViewModel() {
     init { checkLoginStatus() }
 
     private fun checkLoginStatus() {
-        val isLoggedIn = true
-        if (isLoggedIn) {
+        val isLoggedIn = false
+        val isOnboardingLaunch = true
+        if (!isLoggedIn) {
             fetchProfileApi()
             return
         }
+        if (!isOnboardingLaunch) {
+            uiState.value = SplashUiState.NavigateToOnboarding
+            return
+        }
+        uiState.value = SplashUiState.ProfileApiSuccess
     }
 
     private fun fetchProfileApi() {
@@ -35,9 +41,10 @@ class SplashViewModel @Inject constructor() : ViewModel() {
             uiState.value = SplashUiState.Loading(isLoading = true)
             delay(2000)
             uiState.value = SplashUiState.Loading(isLoading = false)
-            uiState.value = SplashUiState.ProfileApiSuccess
+            //uiState.value = SplashUiState.ProfileApiSuccess
             //uiState.value = SplashUiState.ProfileApiError("error", 404)
             //uiState.value = SplashUiState.NavigateToOnboarding
+            uiState.value = SplashUiState.NavigateToLogin
 
         }
     }
