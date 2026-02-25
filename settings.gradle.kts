@@ -39,3 +39,4 @@ include(":feature-credential:onboarding")
 include(":feature-credential:splash")
 include(":feature:posts")
 
+include(":core:datastore")

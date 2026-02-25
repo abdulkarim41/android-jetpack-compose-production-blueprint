@@ -44,6 +44,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.core.di)
     implementation(projects.core.secureStorage)
+    implementation(projects.core.datastore)
 
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)
