@@ -43,12 +43,15 @@ dependencies {
     implementation(projects.core.designSystem)
     implementation(projects.core.ui)
     implementation(projects.core.di)
+    implementation(projects.core.secureStorage)
 
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)
 
 
     //implementation(projects.feature.posts)
+
+
 
 
     implementation(libs.log.timber)

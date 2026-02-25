@@ -20,6 +20,8 @@ androidxNavigation3 = "1.0.1"
 androidxComposeFoundation = "1.10.3"
 androidxComposeMaterial3Adaptive = "1.2.0"
 kotlinxCoroutines = "1.10.2"
+datastorePreferences = "1.2.0"
+securityCrypto = "1.1.0"
 timber = "5.0.1"
 # Navigation
 navigationCompose = "2.9.7"
@@ -33,6 +35,8 @@ gson = "2.13.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

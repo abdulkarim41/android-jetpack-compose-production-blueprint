@@ -1,0 +1,20 @@
+package com.abdulkarim.securestorage.di
+
+import com.abdulkarim.securestorage.SecureStorageImpl
+import com.abdulkarim.securestorage.SecureStorage
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class SecureStorageModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindSecureStorage(
+        secureStorageImpl: SecureStorageImpl
+    ): SecureStorage
+}

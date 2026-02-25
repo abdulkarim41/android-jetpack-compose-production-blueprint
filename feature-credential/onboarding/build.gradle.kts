@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.abdulkarim.onboarding"
 }
+
+dependencies {
+    implementation(projects.core.secureStorage)
+}
