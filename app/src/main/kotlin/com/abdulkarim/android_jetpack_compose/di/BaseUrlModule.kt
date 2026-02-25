@@ -1,4 +1,4 @@
-package com.abdulkarim.android_jetpack_compose
+package com.abdulkarim.android_jetpack_compose.di
 
 import com.abdulkarim.di.qualifer.AppBaseUrl
 import dagger.Module

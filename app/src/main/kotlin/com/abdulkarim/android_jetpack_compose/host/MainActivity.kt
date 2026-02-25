@@ -1,4 +1,4 @@
-package com.abdulkarim.android_jetpack_compose
+package com.abdulkarim.android_jetpack_compose.host
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.abdulkarim.android_jetpack_compose.navigation.AppNavigation
+import com.abdulkarim.android_jetpack_compose.navigation.RootNavGraph
 import com.abdulkarim.desingsystem.theme.AndroidjetpackcomposeproductionblueprintTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             AndroidjetpackcomposeproductionblueprintTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        AppNavigation()
+                        RootNavGraph()
                     }
                 }
             }

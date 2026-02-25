@@ -4,21 +4,19 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.abdulkarim.login.LoginScreen
-import com.abdulkarim.onboarding.OnboardingScreen
-//import com.abdulkarim.posts.PostListScreen
 import com.abdulkarim.splash.SplashScreen
 
 @Composable
-fun AppNavigation(
-    navController: NavHostController = rememberNavController(),
-    startDestination: Any = Screen.Splash
+fun RootNavGraph(
+    navController: NavHostController = rememberNavController()
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = Screen.Splash
     ) {
+
         composable<Screen.Splash> {
             SplashScreen(
                 navigateToOnboarding = {
@@ -39,30 +37,13 @@ fun AppNavigation(
             )
         }
 
-        composable<Screen.Onboarding> {
-            OnboardingScreen(onFinish = {
-                navController.navigate(Screen.Login) {
-                    popUpTo<Screen.Onboarding> { inclusive = true }
-                }
-            })
+        navigation<Screen.AuthGraph>(startDestination = Screen.Onboarding) {
+            authNavGraph(navController)
         }
 
-        composable<Screen.Login> {
-            LoginScreen(onLoginSuccess = {
-//                navController.navigate(Screen.Home) {
-//                    popUpTo<Screen.Login> { inclusive = true }
-//                }
-            })
+        navigation<Screen.MainGraph>(startDestination = Screen.Main) {
+            mainNavGraph(navController)
         }
-
-//        composable<Screen.Home> {
-//            PostListScreen(
-//                onPostClick = { item ->
-//                    navController.navigate(Screen.PostDetailScreenRoute(item.id))
-//                }
-//            )
-//        }
     }
 }
-
 
