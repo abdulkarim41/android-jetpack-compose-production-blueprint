@@ -24,11 +24,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AndroidjetpackcomposeproductionblueprintTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding)) {
-                        RootNavGraph()
-                    }
-                }
+                RootNavGraph()
             }
         }
     }
