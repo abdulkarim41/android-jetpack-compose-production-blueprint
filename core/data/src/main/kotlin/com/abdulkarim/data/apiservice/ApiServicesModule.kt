@@ -1,5 +1,7 @@
 package com.abdulkarim.data.apiservice
 
+import com.abdulkarim.di.authrefresh.AuthRefreshApiService
+import com.abdulkarim.di.authrefresh.AuthRefreshServiceHolder
 import com.abdulkarim.di.qualifer.AppBaseUrl
 import dagger.Module
 import dagger.Provides
@@ -16,16 +18,10 @@ object ApiServicesModule {
     @Singleton
     fun provideAuthApiService(
         @AppBaseUrl retrofit: Retrofit,
+        authRefreshServiceHolder: AuthRefreshServiceHolder
     ): AuthApiService {
+        authRefreshServiceHolder.setAuthRefreshApi(retrofit.create(AuthRefreshApiService::class.java))
         return retrofit.create(AuthApiService::class.java)
     }
-
-//    @Provides
-//    @Singleton
-//    fun providePostApiService(
-//        @AppBaseUrl retrofit: Retrofit,
-//    ): PostApiService {
-//        return retrofit.create(PostApiService::class.java)
-//    }
 
 }

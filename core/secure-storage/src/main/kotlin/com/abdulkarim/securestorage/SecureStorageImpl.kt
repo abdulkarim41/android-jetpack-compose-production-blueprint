@@ -30,7 +30,7 @@ class SecureStorageImpl @Inject constructor(
         cryptoManager = CryptoManager(KEY_ALIAS)
     }
 
-    override suspend fun saveAccessToken(token: String) {
+    override fun saveAccessToken(token: String) {
         val (iv, encrypted) = cryptoManager.encrypt(token)
         prefs.edit {
             putString(KEY_ACCESS_IV, iv)
@@ -39,14 +39,14 @@ class SecureStorageImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAccessToken(): String {
+    override fun getAccessToken(): String {
         val iv = prefs.getString(KEY_ACCESS_IV, null) ?: return ""
         val encrypted = prefs.getString(KEY_ACCESS_TOKEN, null) ?: return ""
 
         return cryptoManager.decrypt(iv, encrypted)
     }
 
-    override suspend fun saveRefreshToken(token: String) {
+    override fun saveRefreshToken(token: String) {
         val (iv, encrypted) = cryptoManager.encrypt(token)
         prefs.edit {
             putString(KEY_REFRESH_IV, iv)
@@ -55,7 +55,7 @@ class SecureStorageImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRefreshToken(): String {
+    override fun getRefreshToken(): String {
         val iv = prefs.getString(KEY_REFRESH_IV, null) ?: return ""
         val encrypted = prefs.getString(KEY_REFRESH_TOKEN, null) ?: return ""
 

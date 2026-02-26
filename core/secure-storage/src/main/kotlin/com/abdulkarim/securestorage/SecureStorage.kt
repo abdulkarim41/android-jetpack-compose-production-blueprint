@@ -2,10 +2,10 @@ package com.abdulkarim.securestorage
 
 interface SecureStorage {
 
-    suspend fun saveAccessToken(token: String)
-    suspend fun getAccessToken(): String
+    fun saveAccessToken(token: String)
+    fun getAccessToken(): String
 
-    suspend fun saveRefreshToken(token: String)
-    suspend fun getRefreshToken(): String
+    fun saveRefreshToken(token: String)
+    fun getRefreshToken(): String
     suspend fun clear()
 }
