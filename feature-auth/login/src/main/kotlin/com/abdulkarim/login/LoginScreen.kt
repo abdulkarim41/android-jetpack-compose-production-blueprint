@@ -1,11 +1,11 @@
 package com.abdulkarim.login
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -15,9 +15,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.abdulkarim.domain.apiusecase.auth.PostLoginApiUseCase
-import kotlinx.coroutines.delay
+import com.abdulkarim.ui.NetworkErrorView
 import kotlinx.coroutines.launch
 
 @Composable
@@ -35,26 +35,19 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     onLoginSuccess: () -> Unit
 ) {
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    val isLoading = uiState is LoginUiState.Loading
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var isLoading by remember { mutableStateOf(false) }
-
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is LoginUiEvent.Loading -> {
-                    isLoading = event.isLoading
-                }
-                is LoginUiEvent.ApiSuccess -> {
-                    isLoading = false
+                is LoginUiEvent.NavigateToMain -> {
                     onLoginSuccess()
-                }
-                is LoginUiEvent.LoginApiError -> {
-                    isLoading = false
-                    // Handle error (e.g., show Toast)
-                    Log.e("LoginScreen", "Error: ${event.message}")
                 }
             }
         }
@@ -67,14 +60,35 @@ fun LoginScreen(
         contentAlignment = Alignment.Center
     ) {
 
+        when (val state = uiState) {
+            is LoginUiState.Loading -> {}
+            is LoginUiState.Idle -> {}
+            is LoginUiState.ProfileApiError -> {
+                NetworkErrorView(
+                    message = state.message,
+                    onRetry = {
+                        viewModel.onAction(LoginUiAction.FetchProfileApiAction)
+                    }
+                )
+            }
+            is LoginUiState.LoginApiError -> {
+                NetworkErrorView(
+                    message = state.message,
+                    onRetry = {
+                        viewModel.onAction(LoginUiAction.FetchProfileApiAction)
+                    }
+                )
+            }
+        }
+
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
-                text = "Login",
-                style = MaterialTheme.typography.headlineMedium
+                text = "Welcome back!",
+                style = MaterialTheme.typography.displaySmall
             )
 
             OutlinedTextField(
@@ -98,7 +112,7 @@ fun LoginScreen(
                 onClick = {
                     scope.launch {
 
-                        viewModel.action(LoginUiAction.PostLoginApiAction(
+                        viewModel.onAction(LoginUiAction.PostLoginApiAction(
                             PostLoginApiUseCase.Params(
                                 username = "emilys",
                                 password = "emilyspass"
@@ -106,7 +120,10 @@ fun LoginScreen(
                         ))
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(14.dp)
+                    .height(48.dp),
+                shape = MaterialTheme.shapes.small,
                 enabled = !isLoading
             ) {
                 if (isLoading) {
