@@ -16,6 +16,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(project(":core:design-system"))
                 "implementation"(project(":core:common"))
                 "implementation"(project(":core:domain"))
+                "implementation"(project(":core:datastore"))
                 "implementation"(project(":core:model:entity"))
 
                 "implementation"(libs.findLibrary("androidx.lifecycle.runtime.compose").get())

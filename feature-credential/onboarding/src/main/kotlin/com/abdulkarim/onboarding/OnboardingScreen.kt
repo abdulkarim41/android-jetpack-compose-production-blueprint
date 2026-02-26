@@ -9,14 +9,28 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @Composable
 fun OnboardingScreen(
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    viewModel: OnboardingViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                OnboardingViewModel.UiEvent.NavigateNext -> {
+                    onFinish()
+                }
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -33,10 +47,12 @@ fun OnboardingScreen(
                 text = "onboarding screen",
                 style = MaterialTheme.typography.headlineMedium
             )
-            Button(onClick = onFinish) {
+
+            Button(
+                onClick = viewModel::onNextClicked
+            ) {
                 Text("continue")
             }
-
         }
     }
 }

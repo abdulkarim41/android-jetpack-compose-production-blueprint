@@ -9,9 +9,11 @@ android {
 }
 
 dependencies {
+    api(projects.core.di)
     api(projects.core.common)
     api(projects.core.domain)
-    api(projects.core.di)
+    api(projects.core.datastore)
+    api(projects.core.secureStorage)
     api(projects.core.model.entity)
     api(projects.core.model.apiresponse)
 

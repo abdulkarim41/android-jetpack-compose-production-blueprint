@@ -14,8 +14,10 @@ class SecureStorageImpl @Inject constructor(
     companion object {
         private const val PREF_NAME = "secure_storage"
         private const val KEY_ALIAS = "secure_token_key"
-        private const val KEY_IV = "token_iv"
-        private const val KEY_TOKEN = "token_value"
+        private const val KEY_ACCESS_IV = "access_iv"
+        private const val KEY_REFRESH_IV = "refresh_iv"
+        private const val KEY_ACCESS_TOKEN = "access_token_value"
+        private const val KEY_REFRESH_TOKEN = "refresh_token_value"
     }
 
     private val prefs =
@@ -28,18 +30,34 @@ class SecureStorageImpl @Inject constructor(
         cryptoManager = CryptoManager(KEY_ALIAS)
     }
 
-    override suspend fun saveToken(token: String) {
+    override suspend fun saveAccessToken(token: String) {
         val (iv, encrypted) = cryptoManager.encrypt(token)
-
         prefs.edit {
-            putString(KEY_IV, iv)
-                .putString(KEY_TOKEN, encrypted)
+            putString(KEY_ACCESS_IV, iv)
+            putString(KEY_ACCESS_TOKEN, encrypted)
+            commit()
         }
     }
 
-    override suspend fun getToken(): String? {
-        val iv = prefs.getString(KEY_IV, null) ?: return null
-        val encrypted = prefs.getString(KEY_TOKEN, null) ?: return null
+    override suspend fun getAccessToken(): String {
+        val iv = prefs.getString(KEY_ACCESS_IV, null) ?: return ""
+        val encrypted = prefs.getString(KEY_ACCESS_TOKEN, null) ?: return ""
+
+        return cryptoManager.decrypt(iv, encrypted)
+    }
+
+    override suspend fun saveRefreshToken(token: String) {
+        val (iv, encrypted) = cryptoManager.encrypt(token)
+        prefs.edit {
+            putString(KEY_REFRESH_IV, iv)
+            putString(KEY_REFRESH_TOKEN, encrypted)
+            commit()
+        }
+    }
+
+    override suspend fun getRefreshToken(): String {
+        val iv = prefs.getString(KEY_REFRESH_IV, null) ?: return ""
+        val encrypted = prefs.getString(KEY_REFRESH_TOKEN, null) ?: return ""
 
         return cryptoManager.decrypt(iv, encrypted)
     }
