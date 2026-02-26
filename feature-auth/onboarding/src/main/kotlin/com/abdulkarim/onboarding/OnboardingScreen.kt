@@ -1,13 +1,9 @@
 package com.abdulkarim.onboarding
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -23,23 +19,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material.icons.outlined.AddShoppingCart
-import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.LocalGroceryStore
-import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.RemoveShoppingCart
-import androidx.compose.material.icons.outlined.RepeatOne
-import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material.icons.outlined.ShoppingCartCheckout
-import androidx.compose.material.icons.rounded.LocalGroceryStore
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
