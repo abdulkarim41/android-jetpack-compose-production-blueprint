@@ -101,7 +101,9 @@ fun OnboardingScreen(
                     .padding(horizontal = 8.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                TextButton(onClick = onFinish) {
+                TextButton(onClick = {
+                    viewModel.onNavigateToNext()
+                }) {
                     Text("Skip")
                 }
             }
@@ -185,7 +187,7 @@ fun OnboardingScreen(
                     shape = MaterialTheme.shapes.small,
                     onClick = {
                         if (isLastPage) {
-                            onFinish()
+                            viewModel.onNavigateToNext()
                         } else {
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)

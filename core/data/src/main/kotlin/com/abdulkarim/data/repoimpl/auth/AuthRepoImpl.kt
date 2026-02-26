@@ -48,6 +48,7 @@ class AuthRepoImpl @Inject constructor(
         ).onEach {
             if (it is Result.Success){
                 datastorePreferences.cacheProfile(it.data)
+                datastorePreferences.setUserLoggedIn(true)
             }
         }
     }

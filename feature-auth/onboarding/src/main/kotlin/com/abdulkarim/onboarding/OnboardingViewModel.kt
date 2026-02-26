@@ -17,7 +17,7 @@ class OnboardingViewModel @Inject constructor(
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
 
-    fun onNextClicked() {
+    fun onNavigateToNext() {
         viewModelScope.launch {
             datastorePreferences.setOnboardingLaunched(true)
             _uiEvent.emit(UiEvent.NavigateNext)
