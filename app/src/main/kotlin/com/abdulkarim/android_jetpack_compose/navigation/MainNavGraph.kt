@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abdulkarim.datastore.DatastorePreferences
 import com.abdulkarim.entity.auth.ProfileApiEntity
+import com.abdulkarim.profile.ProfileScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -64,19 +65,11 @@ fun MainScreen(rootNavController: NavHostController) {
         ) {
 
             composable<Screen.Home> {
-                HomeScreen(
-//                    onOpenDetails = {
-//                        bottomNavController.navigate(Screen.HomeDetails)
-//                    }
-                )
+                HomeScreen()
             }
 
             composable<Screen.Profile> {
-                ProfileScreen(
-//                    onOpenDetails = {
-//                        bottomNavController.navigate(Screen.ProfileDetails)
-//                    }
-                )
+                ProfileScreen()
             }
 
         }
@@ -109,90 +102,4 @@ fun HomeScreen() {
 
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ProfileScreen(
-    onLogout: () -> Unit = {},
-    viewModel: ProfileViewModel = hiltViewModel()
-) {
-
-    val profile by viewModel.profile.collectAsState()
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Profile") }
-            )
-        }
-    ) { padding ->
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-
-            profile?.let { data ->
-
-                ProfileImage(data.image)
-
-                Text(
-                    text = data.maidenName,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text(text = data.phone)
-                Text(text = data.email)
-
-            } ?: run {
-                Text("No profile data")
-            }
-
-            Text(
-                text = "User Profile",
-                style = MaterialTheme.typography.headlineMedium
-            )
-
-            OutlinedButton(
-                onClick = onLogout,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Logout")
-            }
-        }
-    }
-}
-
-@Composable
-fun ProfileImage(url: String) {
-
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .crossfade(true)
-            .build(),
-        contentDescription = "Profile image",
-        modifier = Modifier
-            .size(80.dp)
-            .clip(CircleShape),
-        contentScale = ContentScale.Crop
-    )
-}
-
-@HiltViewModel
-class ProfileViewModel @Inject constructor(
-    datastore: DatastorePreferences
-) : ViewModel() {
-
-    val profile: StateFlow<ProfileApiEntity?> =
-        datastore.getCachedProfile()
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null
-            )
 }

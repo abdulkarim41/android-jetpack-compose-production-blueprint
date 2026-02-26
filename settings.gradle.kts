@@ -40,3 +40,4 @@ include(":feature-auth:splash")
 include(":feature:posts")
 
 include(":core:datastore")
+include(":feature-common:profile")

@@ -37,6 +37,8 @@ dependencies {
     implementation(projects.featureAuth.onboarding)
     implementation(projects.featureAuth.login)
 
+    implementation(projects.featureCommon.profile)
+
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.domain)
