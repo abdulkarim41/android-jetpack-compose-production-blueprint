@@ -13,6 +13,7 @@ import com.abdulkarim.entity.auth.LoginApiEntity
 import com.abdulkarim.entity.auth.ProfileApiEntity
 import com.abdulkarim.securestorage.SecureStorage
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -45,7 +46,11 @@ class AuthRepoImpl @Inject constructor(
                 authApiService.fetchProfileApi()
             },
             mapper = profileApiMapper
-        )
+        ).onEach {
+            if (it is Result.Success){
+                datastorePreferences.cacheProfile(it.data)
+            }
+        }
     }
 
 }

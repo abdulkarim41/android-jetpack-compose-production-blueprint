@@ -9,10 +9,11 @@ class ProfileApiMapper @Inject constructor() : Mapper<ProfileApiResponse, Profil
 
     override fun mapFromApiResponse(type: ProfileApiResponse): ProfileApiEntity {
         return ProfileApiEntity(
-            username = type.username ?: "",
             email = type.email ?: "",
             firstName = type.firstName ?: "",
             lastName = type.lastName ?: "",
+            maidenName = type.maidenName ?: "",
+            phone = type.phone ?: "",
             gender = type.gender ?: "",
             image = type.image ?: "",
         )

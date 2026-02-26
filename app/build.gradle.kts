@@ -49,6 +49,8 @@ dependencies {
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)
 
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 
     //implementation(projects.feature.posts)
 
