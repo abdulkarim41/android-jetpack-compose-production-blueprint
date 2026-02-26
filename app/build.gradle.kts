@@ -33,9 +33,9 @@ android {
 
 dependencies {
 
-    implementation(projects.featureCredential.splash)
-    implementation(projects.featureCredential.onboarding)
-    implementation(projects.featureCredential.login)
+    implementation(projects.featureAuth.splash)
+    implementation(projects.featureAuth.onboarding)
+    implementation(projects.featureAuth.login)
 
     implementation(projects.core.common)
     implementation(projects.core.data)
@@ -49,7 +49,7 @@ dependencies {
     implementation(projects.core.model.apiresponse)
     implementation(projects.core.model.entity)
 
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil.compose)
 
 
     //implementation(projects.feature.posts)
