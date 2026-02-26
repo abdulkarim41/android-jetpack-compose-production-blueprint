@@ -39,6 +39,8 @@ dependencies {
 
     implementation(projects.featureCommon.profile)
 
+    implementation(projects.feature.product)
+
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.domain)
@@ -54,7 +56,7 @@ dependencies {
     implementation(libs.coil.compose)
 
 
-    //implementation(projects.feature.posts)
+
 
 
 

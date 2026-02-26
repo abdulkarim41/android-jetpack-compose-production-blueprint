@@ -1,5 +1,7 @@
 package com.abdulkarim.data.apiservice
 
+import com.abdulkarim.data.apiservice.auth.AuthApiService
+import com.abdulkarim.data.apiservice.product.ProductApiService
 import com.abdulkarim.di.authrefresh.AuthRefreshApiService
 import com.abdulkarim.di.authrefresh.AuthRefreshServiceHolder
 import com.abdulkarim.di.qualifer.AppBaseUrl
@@ -22,6 +24,16 @@ object ApiServicesModule {
     ): AuthApiService {
         authRefreshServiceHolder.setAuthRefreshApi(retrofit.create(AuthRefreshApiService::class.java))
         return retrofit.create(AuthApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductApiService(
+        @AppBaseUrl retrofit: Retrofit,
+        authRefreshServiceHolder: AuthRefreshServiceHolder
+    ): ProductApiService {
+        authRefreshServiceHolder.setAuthRefreshApi(retrofit.create(AuthRefreshApiService::class.java))
+        return retrofit.create(ProductApiService::class.java)
     }
 
 }

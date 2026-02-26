@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.abdulkarim.datastore.DatastorePreferences
 import com.abdulkarim.entity.auth.ProfileApiEntity
+import com.abdulkarim.product.PostListScreen
 import com.abdulkarim.profile.ProfileScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -65,7 +66,10 @@ fun MainScreen(rootNavController: NavHostController) {
         ) {
 
             composable<Screen.Home> {
-                HomeScreen()
+                //HomeScreen()
+                PostListScreen(onPostClick = {
+
+                })
             }
 
             composable<Screen.Profile> {

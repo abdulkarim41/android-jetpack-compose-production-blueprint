@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.abdulkarim.posts"
 }
+
+dependencies {
+    implementation(libs.coil.compose)
+}

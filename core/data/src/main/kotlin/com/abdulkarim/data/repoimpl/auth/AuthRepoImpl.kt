@@ -1,7 +1,7 @@
 package com.abdulkarim.data.repoimpl.auth
 
 import com.abdulkarim.common.base.Result
-import com.abdulkarim.data.apiservice.AuthApiService
+import com.abdulkarim.data.apiservice.auth.AuthApiService
 import com.abdulkarim.data.mapper.auth.LoginApiMapper
 import com.abdulkarim.data.mapper.auth.ProfileApiMapper
 import com.abdulkarim.data.mapper.mapFromApiResponse
@@ -13,7 +13,6 @@ import com.abdulkarim.entity.auth.LoginApiEntity
 import com.abdulkarim.entity.auth.ProfileApiEntity
 import com.abdulkarim.securestorage.SecureStorage
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
