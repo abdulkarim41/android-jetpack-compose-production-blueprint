@@ -12,6 +12,7 @@ import com.abdulkarim.domain.repository.auth.AuthRepository
 import com.abdulkarim.entity.auth.LoginApiEntity
 import com.abdulkarim.entity.auth.ProfileApiEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
@@ -23,13 +24,14 @@ class AuthRepoImpl @Inject constructor(
     ) : AuthRepository {
 
     override suspend fun postLoginApi(params: PostLoginApiUseCase.Params): Flow<Result<LoginApiEntity>> {
-        Log.d("AuthRepoImpl", "postLoginApi: $params")
         return mapFromApiResponse(
-            result = networkBoundResource.fetchData {
-                authApiService.postLoginApi(params)
-            },
+            result = networkBoundResource.fetchData { authApiService.postLoginApi(params) },
             mapper = loginApiMapper
-        )
+        ).onEach { result ->
+                if (result is Result.Success){
+                    Log.d("KKK", "access token ${result.data.accessToken}")
+                }
+            }
     }
 
     override suspend fun fetchProfileApi(): Flow<Result<ProfileApiEntity>> {

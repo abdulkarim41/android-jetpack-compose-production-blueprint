@@ -9,8 +9,8 @@ class LoginApiMapper @Inject constructor() : Mapper<LoginApiResponse, LoginApiEn
 
     override fun mapFromApiResponse(type: LoginApiResponse): LoginApiEntity {
         return LoginApiEntity(
-            accessToken = type.token ?: "",
-            refreshToken = type.token ?: "",
+            accessToken = type.accessToken ?: "",
+            refreshToken = type.refreshToken ?: "",
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.abdulkarim.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +40,25 @@ fun LoginScreen(
     var isLoading by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is LoginUiEvent.Loading -> {
+                    isLoading = event.isLoading
+                }
+                is LoginUiEvent.ApiSuccess -> {
+                    isLoading = false
+                    onLoginSuccess()
+                }
+                is LoginUiEvent.LoginApiError -> {
+                    isLoading = false
+                    // Handle error (e.g., show Toast)
+                    Log.e("LoginScreen", "Error: ${event.message}")
+                }
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -76,14 +97,6 @@ fun LoginScreen(
             Button(
                 onClick = {
                     scope.launch {
-//                        isLoading = true
-//                        delay(1500)
-//
-//                        if (email.isNotBlank() && password.isNotBlank()) {
-//                            //onLoginSuccess()
-//                        }
-//
-//                        isLoading = false
 
                         viewModel.action(LoginUiAction.PostLoginApiAction(
                             PostLoginApiUseCase.Params(
