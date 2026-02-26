@@ -29,12 +29,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -60,59 +60,62 @@ fun PostListScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        ProductTopBar(cartCount = 3)
+    Scaffold(
+        topBar = {
+            ProductTopBar(3)
+        }
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            when (state) {
+                is ProductViewModel.UiState.Loading -> {
+                    LoadingView()
+                }
+                is ProductViewModel.UiState.ApiError -> {
+                    val error = state as ProductViewModel.UiState.ApiError
+                    NetworkErrorView(
+                        message = error.message,
+                        onRetry = {
+                            viewModel.action(ProductViewModel.UiAction.FetchProductsApiAction)
+                        }
+                    )
+                }
+                is ProductViewModel.UiState.ApiSuccess -> {
+                    val success = state as ProductViewModel.UiState.ApiSuccess
 
-        when (state) {
-            is ProductViewModel.UiState.Loading -> {
-                LoadingView()
-            }
-            is ProductViewModel.UiState.ApiError -> {
-                val error = state as ProductViewModel.UiState.ApiError
-                NetworkErrorView(
-                    message = error.message,
-                    onRetry = {
-                        viewModel.action(ProductViewModel.UiAction.FetchProductsApiAction)
-                    }
-                )
-            }
-            is ProductViewModel.UiState.ApiSuccess -> {
-                val success = state as ProductViewModel.UiState.ApiSuccess
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                Spacer(modifier = Modifier.height(8.dp))
+                    ProductSearchBar(
+                        query = success.searchQuery,
+                        onQueryChange = {
+                            viewModel.action(ProductViewModel.UiAction.SearchChanged(it))
+                        }
+                    )
 
-                ProductSearchBar(
-                    query = success.searchQuery,
-                    onQueryChange = {
-                        viewModel.action(ProductViewModel.UiAction.SearchChanged(it))
-                    }
-                )
+                    CategoryRow(
+                        categories = success.categories,
+                        selected = success.selectedCategory,
+                        onSelected = {
+                            viewModel.action(ProductViewModel.UiAction.CategoryChanged(it))
+                        }
+                    )
 
-                CategoryRow(
-                    categories = success.categories,
-                    selected = success.selectedCategory,
-                    onSelected = {
-                        viewModel.action(ProductViewModel.UiAction.CategoryChanged(it))
-                    }
-                )
-
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(success.filteredProducts) { product ->
-                        ProductItem(product)
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(success.filteredProducts) { product ->
+                            ProductItem(product)
+                        }
                     }
                 }
+
             }
 
+
         }
-
-
     }
-
 
 }
 
