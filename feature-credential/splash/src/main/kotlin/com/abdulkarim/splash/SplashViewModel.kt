@@ -2,14 +2,22 @@ package com.abdulkarim.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.abdulkarim.datastore.DatastorePreferences
+import com.abdulkarim.domain.apiusecase.auth.FetchProfileApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import com.abdulkarim.common.base.Result
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor() : ViewModel() {
+class SplashViewModel @Inject constructor(
+    private val datastorePreferences: DatastorePreferences,
+    private val fetchProfileApiUseCase: FetchProfileApiUseCase
+) : ViewModel() {
 
     val action: (SplashUiAction) -> Unit = {
         when(it) {
@@ -17,46 +25,56 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private val _uiState = MutableStateFlow<SplashUiState<Any>>(SplashUiState.Loading(isLoading = true))
+    private val _uiState = MutableStateFlow<SplashUiState>(SplashUiState.Loading)
     val uiState get() = _uiState
 
-    init { checkLoginStatus() }
+    private val _uiEvent = MutableSharedFlow<SplashUiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
-    private fun checkLoginStatus() {
-        val isLoggedIn = false
-        val isOnboardingLaunch = true
-        if (!isLoggedIn) {
-            fetchProfileApi()
-            return
+    init {
+        viewModelScope.launch {
+            when {
+                !datastorePreferences.isOnboardingLaunched.first() -> {
+                    _uiEvent.emit(SplashUiEvent.NavigateToOnboarding)
+                }
+                !datastorePreferences.isUserLoggedIn.first() -> {
+                    _uiEvent.emit(SplashUiEvent.NavigateToLogin)
+                }
+                else -> fetchProfileApi()
+            }
         }
-        if (!isOnboardingLaunch) {
-            uiState.value = SplashUiState.NavigateToOnboarding
-            return
-        }
-        uiState.value = SplashUiState.ProfileApiSuccess
+
     }
 
     private fun fetchProfileApi() {
         viewModelScope.launch {
-            uiState.value = SplashUiState.Loading(isLoading = true)
-            delay(2000)
-            uiState.value = SplashUiState.Loading(isLoading = false)
-            //uiState.value = SplashUiState.ProfileApiSuccess
-            //uiState.value = SplashUiState.ProfileApiError("error", 404)
-            //uiState.value = SplashUiState.NavigateToOnboarding
-            uiState.value = SplashUiState.NavigateToLogin
-
+            fetchProfileApiUseCase.execute().collect { result ->
+                when(result){
+                    is Result.Loading -> {
+                        uiState.value = SplashUiState.Loading
+                    }
+                    is Result.Error -> {
+                        uiState.value = SplashUiState.ProfileApiError(result.message, result.code)
+                    }
+                    is Result.Success -> {
+                        _uiEvent.emit(SplashUiEvent.NavigateToMain)
+                    }
+                }
+            }
         }
     }
 
 }
 
-sealed interface SplashUiState<out ResultType> {
-    data class Loading(val isLoading: Boolean) : SplashUiState<Loading>
-    data class ProfileApiError(val message: String, val code: Int) : SplashUiState<ProfileApiError>
-    data object ProfileApiSuccess : SplashUiState<ProfileApiSuccess>
-    data object NavigateToLogin : SplashUiState<NavigateToLogin>
-    data object NavigateToOnboarding : SplashUiState<NavigateToOnboarding>
+sealed interface SplashUiState {
+    data object Loading : SplashUiState
+    data class ProfileApiError(val message: String, val code: Int) : SplashUiState
+}
+
+sealed interface SplashUiEvent {
+    data object NavigateToMain : SplashUiEvent
+    data object NavigateToLogin : SplashUiEvent
+    data object NavigateToOnboarding : SplashUiEvent
 }
 
 sealed interface SplashUiAction {

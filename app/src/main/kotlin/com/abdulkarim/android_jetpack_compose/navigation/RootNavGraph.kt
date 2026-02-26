@@ -25,8 +25,8 @@ fun RootNavGraph(
                     }
                 },
                 navigateToHome = {
-                    navController.navigate(Screen.Home) {
-                        popUpTo<Screen.Home> { inclusive = true }
+                    navController.navigate(Screen.MainGraph) {
+                        popUpTo<Screen.MainGraph> { inclusive = true }
                     }
                 },
                 navigateToLogin = {

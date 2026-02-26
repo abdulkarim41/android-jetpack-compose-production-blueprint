@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,11 +23,13 @@ fun SplashScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(uiState) {
-        when (uiState) {
-            is SplashUiState.ProfileApiSuccess -> navigateToHome()
-            is SplashUiState.NavigateToLogin -> navigateToLogin()
-            else -> navigateToOnboarding()
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is SplashUiEvent.NavigateToMain -> navigateToHome()
+                is SplashUiEvent.NavigateToLogin -> navigateToLogin()
+                is SplashUiEvent.NavigateToOnboarding -> navigateToOnboarding()
+            }
         }
     }
 
@@ -51,13 +51,6 @@ fun SplashScreen(
                         viewModel.action(SplashUiAction.FetchProfileApiAction)
                     }
                 )
-            }
-            else -> {
-                Text(
-                    text = "splash screen",
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
             }
         }
     }
