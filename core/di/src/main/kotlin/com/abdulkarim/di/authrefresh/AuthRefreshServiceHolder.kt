@@ -9,11 +9,16 @@ data class RefreshTokenApiResponse(
     val refreshToken: String
 )
 
+data class RefreshTokenApiParams(
+    val refreshToken: String,
+    val expiresInMins: Int = 30
+)
+
 interface AuthRefreshApiService{
 
     @POST("auth/refresh")
     fun refreshToken(
-        @Body refreshToken: String
+        @Body request: RefreshTokenApiParams
     ): Call<RefreshTokenApiResponse>
 }
 
