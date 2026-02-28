@@ -65,7 +65,7 @@ fun MainScreen(navigator: AppNavigator) {
 
         NavHost(
             navController = navController,
-            startDestination = AppDestination.Home.route,
+            startDestination = AppDestination.HomeGraph.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             homeNavGraph(navigator)
