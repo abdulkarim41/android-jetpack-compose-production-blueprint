@@ -21,12 +21,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -45,11 +39,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.abdulkarim.desingsystem.icon.AppIcons
 import com.abdulkarim.entity.product.ProductApiEntity
 import com.abdulkarim.ui.NetworkErrorView
 
@@ -219,7 +213,7 @@ fun ProductTopBar(
         // Left Section
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onMenuClick) {
-                Icon(Icons.Default.Menu, contentDescription = null)
+                Icon(AppIcons.Menu, contentDescription = null)
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -236,7 +230,7 @@ fun ProductTopBar(
 
             Box {
                 IconButton(onClick = onCartClick) {
-                    Icon(Icons.Default.ShoppingCart, contentDescription = null)
+                    Icon(AppIcons.ShoppingCart, contentDescription = null)
                 }
 
                 if (cartCount > 0) {
@@ -257,7 +251,7 @@ fun ProductTopBar(
             }
 
             IconButton(onClick = onMoreClick) {
-                Icon(Icons.Default.MoreVert, contentDescription = null)
+                Icon(AppIcons.MoreVert, contentDescription = null)
             }
         }
     }
@@ -278,10 +272,10 @@ fun ProductSearchBar(
         singleLine = true,
         shape = RoundedCornerShape(50),
         leadingIcon = {
-            Icon(Icons.Default.Search, contentDescription = null)
+            Icon(AppIcons.Search, contentDescription = null)
         },
         trailingIcon = {
-            Icon(Icons.Default.Mic, contentDescription = null)
+            Icon(AppIcons.Mic, contentDescription = null)
         },
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = Color.Transparent,
@@ -290,25 +284,6 @@ fun ProductSearchBar(
             focusedContainerColor = Color(0xFFF1F1F1)
         )
     )
-}
-
-@Preview
-@Composable
-fun ProductItemPreview() {
-//    ProductSearchBar(
-//        query = "",
-//        onQueryChange = {}
-//    )
-//    val categories = listOf("All", "beauty", "electronics", "fashion")
-//    CategoryRow(
-//        categories = categories,
-//        selected = "beauty",
-//        onSelected = {
-//
-//        }
-//    ) {
-//        categories.random()
-//    }
 }
 
 

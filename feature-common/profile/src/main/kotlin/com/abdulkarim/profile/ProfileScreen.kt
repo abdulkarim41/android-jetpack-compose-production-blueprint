@@ -18,16 +18,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Logout
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Feedback
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Payment
-import androidx.compose.material.icons.outlined.QuestionMark
-import androidx.compose.material.icons.outlined.ShoppingCartCheckout
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -57,6 +47,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.abdulkarim.desingsystem.component.AppButton
 import com.abdulkarim.desingsystem.component.AppOutlinedButton
+import com.abdulkarim.desingsystem.icon.AppIcons
 import kotlinx.coroutines.launch
 
 
@@ -102,7 +93,7 @@ fun ProfileScreen(
                         .background(MaterialTheme.colorScheme.primary, CircleShape)
                         .padding(4.dp)
                 ) {
-                    Icon(Icons.Default.Edit, contentDescription = null, tint = Color.White, modifier = Modifier.size(16.dp))
+                    Icon(AppIcons.EditDefault, contentDescription = null, tint = Color.White, modifier = Modifier.size(16.dp))
                 }
 
             }
@@ -140,10 +131,10 @@ fun ProfileScreen(
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
                 Column {
-                    ProfileMenuItem(icon = Icons.Outlined.Edit, label = "Edit Profile")
-                    ProfileMenuItem(icon = Icons.Outlined.Payment, label = "Payment")
-                    ProfileMenuItem(icon = Icons.Outlined.Feedback, label = "Feedback")
-                    ProfileMenuItem(icon = Icons.Outlined.ShoppingCartCheckout, label = "Orders")
+                    ProfileMenuItem(icon = AppIcons.Edit, label = "Edit Profile")
+                    ProfileMenuItem(icon = AppIcons.Payment, label = "Payment")
+                    ProfileMenuItem(icon = AppIcons.Feedback, label = "Feedback")
+                    ProfileMenuItem(icon = AppIcons.ShoppingCartCheckout, label = "Orders")
                 }
             }
             Spacer(modifier = Modifier.height(18.dp))
@@ -159,10 +150,10 @@ fun ProfileScreen(
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
                 Column {
-                    ProfileMenuItem(icon = Icons.Outlined.QuestionMark, label = "Help")
-                    ProfileMenuItem(icon = Icons.Outlined.Notifications, label = "Notification")
+                    ProfileMenuItem(icon = AppIcons.QuestionMark, label = "Help")
+                    ProfileMenuItem(icon = AppIcons.Notifications, label = "Notification")
                     ProfileMenuItem(
-                        icon = Icons.AutoMirrored.Outlined.Logout,
+                        icon = AppIcons.Logout,
                         label = "Logout",
                         labelColor = Color.Red,
                         onClick = {
@@ -249,6 +240,6 @@ fun ProfileMenuItem(
             color = labelColor,
             modifier = Modifier.weight(1f)
         )
-        Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color.LightGray)
+        Icon(AppIcons.ArrowRight, contentDescription = null, tint = Color.LightGray)
     }
 }

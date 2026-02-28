@@ -1,9 +1,6 @@
 package com.abdulkarim.android_jetpack_compose.navigation
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -19,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.abdulkarim.desingsystem.icon.AppIcons
 import com.abdulkarim.navigation.AppDestination
 import com.abdulkarim.navigation.AppNavigator
 import com.abdulkarim.product.navigation.homeNavGraph
@@ -82,13 +80,13 @@ sealed class BottomNavItem(
     data object Home : BottomNavItem(
         route = AppDestination.Home.route,
         label = "Home",
-        icon = Icons.Default.Home
+        icon = AppIcons.Home
     )
 
     data object Profile : BottomNavItem(
         route = AppDestination.Profile.route,
         label = "Profile",
-        icon = Icons.Default.Person
+        icon = AppIcons.Person
     )
 }
 
