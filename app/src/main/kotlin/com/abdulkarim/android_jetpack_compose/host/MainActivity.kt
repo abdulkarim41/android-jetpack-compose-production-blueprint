@@ -16,15 +16,12 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
 
-    private lateinit var navigator: AppNavigator
+    @Inject lateinit var navigator: AppNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        navigator = AppNavigator()
-
 
         setContent {
             val navController = rememberNavController()
