@@ -21,8 +21,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.abdulkarim.navigation.AppDestination
 import com.abdulkarim.navigation.AppNavigator
-import com.abdulkarim.product.PostListScreen
-import com.abdulkarim.profile.ProfileScreen
+import com.abdulkarim.product.navigation.homeNavGraph
+import com.abdulkarim.profile.navigation.profileNavGraph
 
 fun NavGraphBuilder.mainNavGraph(navigator: AppNavigator) {
     composable(AppDestination.MainGraph.route) {
@@ -68,12 +68,8 @@ fun MainScreen(navigator: AppNavigator) {
             startDestination = AppDestination.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-
-            composable(AppDestination.Home.route) {
-                PostListScreen(onPostClick = {})
-            }
-            composable(AppDestination.Profile.route) { ProfileScreen() }
-
+            homeNavGraph(navigator)
+            profileNavGraph(navigator)
         }
     }
 }

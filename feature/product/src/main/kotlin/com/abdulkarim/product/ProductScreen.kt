@@ -56,7 +56,6 @@ import com.abdulkarim.ui.NetworkErrorView
 @Composable
 fun PostListScreen(
     viewModel: ProductViewModel = hiltViewModel(),
-    onPostClick: (ProductApiEntity) -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
 

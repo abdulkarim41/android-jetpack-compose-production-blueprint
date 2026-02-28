@@ -18,6 +18,15 @@ sealed interface AppDestination {
             get() = "onboarding_graph"
     }
 
+    data object HomeGraph : AppDestination {
+        override val route: String
+            get() = "home_graph"
+    }
+    data object ProfileGraph : AppDestination {
+        override val route: String
+            get() = "profile_graph"
+    }
+
     data object AuthGraph : AppDestination {
         override val route: String
             get() = "auth_graph"
