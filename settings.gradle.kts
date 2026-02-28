@@ -41,3 +41,4 @@ include(":feature:product")
 
 include(":core:datastore")
 include(":feature-common:profile")
+include(":core:navigation")
