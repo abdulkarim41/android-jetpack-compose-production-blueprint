@@ -16,22 +16,21 @@ fun NavGraphBuilder.authNavGraph(appNavigator: AppNavigator) {
     ){
         composable(AppDestination.Onboarding.route) {
             OnboardingScreen(onFinish = {
-//            navController.navigate(Screen.Login) {
-//                popUpTo<Screen.Onboarding> { inclusive = true }
-//            }
-                appNavigator.navigate(AppDestination.Login)
-
+                appNavigator.navigate(
+                    AppDestination.Login,
+                    popUpTo = AppDestination.Onboarding.route,
+                    inclusive = true
+                )
             })
         }
 
         composable(AppDestination.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
-//                navController.navigate(Screen.Main) {
-//                    popUpTo<Screen.Login> { inclusive = true }
-//                }
                     appNavigator.navigate(
-                        AppDestination.MainGraph
+                        AppDestination.MainGraph,
+                        popUpTo = AppDestination.AuthGraph.route,
+                        inclusive = true
                     )
                 }
             )

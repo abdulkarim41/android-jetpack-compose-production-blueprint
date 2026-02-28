@@ -11,9 +11,19 @@ class AppNavigator : Navigator {
     private val _events = MutableSharedFlow<NavigationEvent>()
     val events = _events.asSharedFlow()
 
-    override fun navigate(destination: AppDestination) {
+    override fun navigate(
+        destination: AppDestination,
+        popUpTo: String?,
+        inclusive: Boolean
+    ) {
         CoroutineScope(Dispatchers.Main).launch {
-            _events.emit(NavigationEvent.Navigate(destination.route))
+            _events.emit(
+                NavigationEvent.Navigate(
+                    route = destination.route,
+                    popUpTo = popUpTo,
+                    inclusive = inclusive
+                )
+            )
         }
     }
 
@@ -22,17 +32,13 @@ class AppNavigator : Navigator {
             _events.emit(NavigationEvent.PopBack)
         }
     }
-
-    override fun popUpTo(destination: AppDestination, inclusive: Boolean) {
-        CoroutineScope(Dispatchers.Main).launch {
-            _events.emit(
-                NavigationEvent.Navigate(destination.route)
-            )
-        }
-    }
 }
 
 sealed class NavigationEvent {
-    data class Navigate(val route: String) : NavigationEvent()
+    data class Navigate(
+        val route: String,
+        val popUpTo: String? = null,
+        val inclusive: Boolean = false
+    ) : NavigationEvent()
     data object PopBack : NavigationEvent()
 }

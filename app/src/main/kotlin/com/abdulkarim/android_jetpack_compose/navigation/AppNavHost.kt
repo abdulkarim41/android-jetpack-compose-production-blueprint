@@ -20,7 +20,10 @@ fun AppNavHost(
             when (event) {
 
                 is NavigationEvent.Navigate -> {
-                    navController.navigate(event.route){
+                    navController.navigate(event.route) {
+                        event.popUpTo?.let { route ->
+                            popUpTo(route) { inclusive = event.inclusive }
+                        }
                         launchSingleTop = true
                         restoreState = true
                     }

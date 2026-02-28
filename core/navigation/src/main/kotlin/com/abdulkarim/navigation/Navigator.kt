@@ -1,7 +1,6 @@
 package com.abdulkarim.navigation
 
 interface Navigator {
-    fun navigate(destination: AppDestination)
+    fun navigate(destination: AppDestination,popUpTo: String? = null,inclusive: Boolean = false)
     fun popBack()
-    fun popUpTo(destination: AppDestination, inclusive: Boolean = false)
 }

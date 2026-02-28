@@ -1,36 +1,11 @@
 package com.abdulkarim.splash.navigation
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.abdulkarim.navigation.AppDestination
 import com.abdulkarim.navigation.AppNavigator
 import com.abdulkarim.splash.SplashScreen
-
-//fun NavGraphBuilder.splashNavGraph(
-//    appNavigator: AppNavigator
-//) {
-//    navigation<AppDestination.SplashGraph>(
-//        startDestination = AppDestination.Splash.route
-//    ) {
-//
-//        composable<AppDestination.Splash> {
-//            SplashScreen(
-//                navigateToOnboarding = {
-//                    appNavigator.navigate(AppDestination.AuthGraph)
-//                },
-//                navigateToLogin = {
-//                    appNavigator.navigate(AppDestination.Login)
-//                },
-//                navigateToHome = {
-//                    appNavigator.navigate(AppDestination.MainGraph)
-//                },
-//            )
-//        }
-//
-//    }
-//}
 
 fun NavGraphBuilder.splashNavGraph(appNavigator: AppNavigator) {
     navigation(
@@ -40,13 +15,25 @@ fun NavGraphBuilder.splashNavGraph(appNavigator: AppNavigator) {
         composable(AppDestination.Splash.route) {
             SplashScreen(
                 navigateToOnboarding = {
-                    appNavigator.navigate(AppDestination.AuthGraph)
+                    appNavigator.navigate(
+                        AppDestination.AuthGraph,
+                        popUpTo = AppDestination.SplashGraph.route,
+                        inclusive = true
+                    )
                 },
                 navigateToLogin = {
-                    appNavigator.navigate(AppDestination.Login)
+                    appNavigator.navigate(
+                        AppDestination.Login,
+                        popUpTo = AppDestination.SplashGraph.route,
+                        inclusive = true
+                    )
                 },
                 navigateToHome = {
-                    appNavigator.navigate(AppDestination.MainGraph)
+                    appNavigator.navigate(
+                        AppDestination.MainGraph,
+                        popUpTo = AppDestination.SplashGraph.route,
+                        inclusive = true
+                    )
                 }
             )
         }
