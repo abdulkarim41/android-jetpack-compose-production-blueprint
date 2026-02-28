@@ -9,8 +9,4 @@ android {
 
 dependencies {
     api(projects.core.designSystem)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

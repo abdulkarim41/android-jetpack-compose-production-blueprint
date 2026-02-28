@@ -18,6 +18,8 @@ abstract class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             dependencies {
                 "androidTestImplementation"(libs.findLibrary("kotlin.test").get())
+                "androidTestImplementation"(libs.findLibrary("androidx.junit").get())
+                "androidTestImplementation"(libs.findLibrary("androidx.espresso.core").get())
                 "testImplementation"(libs.findLibrary("kotlin.test").get())
                 "testImplementation"(libs.findLibrary("junit").get())
             }
