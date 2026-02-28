@@ -14,23 +14,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-sealed class BottomNavItem(
-    val route: Screen,
-    val label: String,
-    val icon: ImageVector
-) {
-    data object Home : BottomNavItem(
-        route = Screen.Home,
-        label = "Home",
-        icon = Icons.Default.Home
-    )
-
-    data object Profile : BottomNavItem(
-        route = Screen.Profile,
-        label = "Profile",
-        icon = Icons.Default.Person
-    )
-}
+//sealed class BottomNavItem(
+//    val route: Screen,
+//    val label: String,
+//    val icon: ImageVector
+//) {
+//    data object Home : BottomNavItem(
+//        route = Screen.Home,
+//        label = "Home",
+//        icon = Icons.Default.Home
+//    )
+//
+//    data object Profile : BottomNavItem(
+//        route = Screen.Profile,
+//        label = "Profile",
+//        icon = Icons.Default.Person
+//    )
+//}
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -56,7 +56,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
                 icon = { Icon(item.icon, contentDescription = null) },
-                label = { Text(item.label) }
+                label = { Text(item.label) },
             )
         }
     }

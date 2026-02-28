@@ -39,11 +39,11 @@ fun RootNavGraph(
         }
 
         navigation<Screen.AuthGraph>(startDestination = Screen.Onboarding) {
-            authNavGraph(navController)
+            //authNavGraph(navController)
         }
 
         navigation<Screen.MainGraph>(startDestination = Screen.Main) {
-            mainNavGraph(navController)
+            //mainNavGraph(navController)
         }
     }
 }
