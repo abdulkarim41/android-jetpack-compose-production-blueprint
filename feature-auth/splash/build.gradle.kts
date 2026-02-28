@@ -6,9 +6,3 @@ plugins {
 android {
     namespace = "com.abdulkarim.splash"
 }
-
-dependencies {
-    implementation(projects.core.navigation)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-}
