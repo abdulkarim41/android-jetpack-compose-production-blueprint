@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.abdulkarim.android_jetpack_compose.navigation.AppNavHost
-import com.abdulkarim.desingsystem.theme.AndroidjetpackcomposeproductionblueprintTheme
+import com.abdulkarim.desingsystem.theme.AppTheme
 import com.abdulkarim.navigation.AppNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            AndroidjetpackcomposeproductionblueprintTheme {
+            AppTheme {
                 AppNavHost(
                     navController = navController,
                     navigator = navigator
