@@ -3,6 +3,7 @@ package com.abdulkarim.desingsystem.icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Mic
@@ -35,4 +36,5 @@ object AppIcons {
     val Mic = Icons.Default.Mic
     val ShoppingCartCheckout = Icons.Outlined.ShoppingCartCheckout
     val Logout = Icons.AutoMirrored.Outlined.Logout
+    val CloudOff = Icons.Default.CloudOff
 }
