@@ -1,11 +1,9 @@
 package com.abdulkarim.profile
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,233 +11,240 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.abdulkarim.desingsystem.component.AppButton
 import com.abdulkarim.desingsystem.component.AppOutlinedButton
 import com.abdulkarim.desingsystem.icon.AppIcons
-import kotlinx.coroutines.launch
-
+import com.abdulkarim.entity.auth.ProfileApiEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    onLogout: () -> Unit = {},
-    onLogoutClick: () -> Unit = {},
-    onEditProfileClick: () -> Unit = {},
+    onNavigateToLogin: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    val scrollState = rememberScrollState()
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(false) }
 
-    Scaffold { innerPadding ->
+    val profile by viewModel.profile.collectAsStateWithLifecycle()
+    val showLogoutSheet by viewModel.showLogoutSheet.collectAsStateWithLifecycle()
 
-        Column(
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                ProfileUiEvent.NavigateToLogin -> onNavigateToLogin()
+            }
+        }
+    }
+
+    ProfileContent(
+        profile = profile,
+        showLogoutSheet = showLogoutSheet,
+        onLogoutClick = viewModel::onLogoutClick,
+        onDismissLogout = viewModel::onDismissLogout,
+        onConfirmLogout = viewModel::confirmLogout
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfileContent(
+    profile: ProfileApiEntity?,
+    showLogoutSheet: Boolean,
+    onLogoutClick: () -> Unit,
+    onDismissLogout: () -> Unit,
+    onConfirmLogout: () -> Unit
+) {
+
+    Scaffold { padding ->
+
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(scrollState)
-                .background(Color(0xFFF8F9FA)),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(padding),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp)
         ) {
-            val profile by viewModel.profile.collectAsState()
-
-            Box(contentAlignment = Alignment.BottomEnd) {
-                AsyncImage(
-                    model = profile?.image,
-                    contentDescription = "Profile Picture",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .border(2.dp, Color.White, CircleShape),
-                    contentScale = ContentScale.Crop,
-                )
-                IconButton(
-                    onClick = onEditProfileClick,
-                    modifier = Modifier
-                        .size(32.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape)
-                        .padding(4.dp)
-                ) {
-                    Icon(AppIcons.EditDefault, contentDescription = null, tint = Color.White, modifier = Modifier.size(16.dp))
+            item {
+                profile?.let {
+                    ProfileHeader(it)
                 }
-
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "${profile?.firstName} ${profile?.lastName}",
-                style = MaterialTheme.typography.headlineMedium
-            )
-
-            Surface(
-                color = Color(0xFFE3F2FD),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.padding(top = 8.dp)
-            ) {
-                Text(
-                    text = profile?.email ?: "",
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                    color = Color(0xFF1976D2),
-                    style = MaterialTheme.typography.bodyMedium
+            // Menu Items
+            item {
+                ProfileMenuItem(
+                    label = "Edit Profile",
+                    leadingIcon = AppIcons.Edit,
+                    onItemClick = { /* navigate */ }
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // --- Menu Section ---
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
-                Column {
-                    ProfileMenuItem(icon = AppIcons.Edit, label = "Edit Profile")
-                    ProfileMenuItem(icon = AppIcons.Payment, label = "Payment")
-                    ProfileMenuItem(icon = AppIcons.Feedback, label = "Feedback")
-                    ProfileMenuItem(icon = AppIcons.ShoppingCartCheckout, label = "Orders")
-                }
+            item {
+                ProfileMenuItem(
+                    label = "Orders",
+                    leadingIcon = AppIcons.ShoppingCartCheckout,
+                    onItemClick = { /* navigate */ }
+                )
             }
-            Spacer(modifier = Modifier.height(18.dp))
 
-            // --- Menu Section for others---
+            item {
+                ProfileMenuItem(
+                    label = "Feedback",
+                    leadingIcon = AppIcons.Feedback,
+                    onItemClick = { /* navigate */ }
+                )
+            }
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
-                Column {
-                    ProfileMenuItem(icon = AppIcons.QuestionMark, label = "Help")
-                    ProfileMenuItem(icon = AppIcons.Notifications, label = "Notification")
-                    ProfileMenuItem(
-                        icon = AppIcons.Logout,
-                        label = "Logout",
-                        labelColor = Color.Red,
-                        onClick = {
-                            showBottomSheet = true
-                        }
-                    )
-                }
+            item {
+                ProfileMenuItem(
+                    label = "Help",
+                    leadingIcon = AppIcons.QuestionMark,
+                    onItemClick = { /* navigate */ }
+                )
+            }
+
+            item {
+                ProfileMenuItem(
+                    label = "Logout",
+                    leadingIcon = AppIcons.Logout,
+                    onItemClick = onLogoutClick
+                )
             }
 
         }
     }
 
-    // Bottom Sheet Implementation
-    if (showBottomSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { showBottomSheet = false },
-            sheetState = sheetState
-        ) {
-            // Sheet Content
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    if (showLogoutSheet) {
+        LogoutBottomSheet(
+            onConfirm = onConfirmLogout,
+            onDismiss = onDismissLogout
+        )
+    }
+}
 
-                Text(text = "Are you sure you want to log out?")
-                Spacer(modifier = Modifier.height(24.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
+private data class MenuItem(
+    val label: String,
+    val leadingIcon: ImageVector,
+    val isLogout: Boolean = false
+)
 
-                    AppOutlinedButton(
-                        onClick = { showBottomSheet = false },
-                        modifier = Modifier.weight(1f),
-                        text = "Cancel"
-                    )
+private val profileMenuItems = listOf(
+    MenuItem(label = "Edit Profile", leadingIcon = AppIcons.EditDefault),
+    MenuItem(label = "Payment",leadingIcon = AppIcons.Payment),
+    MenuItem(label = "Orders", leadingIcon = AppIcons.ShoppingCartCheckout),
+    MenuItem("Help", leadingIcon = AppIcons.QuestionMark),
+    MenuItem("Logout", isLogout = true, leadingIcon = AppIcons.Logout)
+)
 
-                    AppButton(
-                        onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                if (!sheetState.isVisible) {
-                                    showBottomSheet = false
-                                    // onLogoutConfirmed()
-                                }
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        text = "Logout"
-                    )
-                }
+@Composable
+private fun ProfileHeader(profile: ProfileApiEntity) {
 
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+        AsyncImage(
+            model = profile.image,
+            contentDescription = null,
+            modifier = Modifier.size(120.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "${profile.firstName} ${profile.lastName}",
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        Text(
+            text = profile.email,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 
 @Composable
-fun ProfileMenuItem(
-    icon: ImageVector,
+private fun ProfileMenuItem(
     label: String,
-    labelColor: Color = Color.Black,
-    onClick: () -> Unit = {}
+    leadingIcon: ImageVector,
+    onItemClick: () -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+    Card(
+        onClick = onItemClick,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Icon(
-            icon,
-            contentDescription = null,
-            tint = if (labelColor == Color.Red) Color.Red else Color(0xFF4A63E7),
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = labelColor,
-            modifier = Modifier.weight(1f)
-        )
-        Icon(AppIcons.ArrowRight, contentDescription = null, tint = Color.LightGray)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(leadingIcon, contentDescription = null)
+            Text(
+                text = label,
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(AppIcons.ArrowRight, contentDescription = null)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LogoutBottomSheet(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Text("Are you sure you want to logout?")
+
+            Spacer(Modifier.height(16.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                AppOutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    text = "Cancel",
+                    onClick = onDismiss
+                )
+
+                AppButton(
+                    modifier = Modifier.weight(1f),
+                    text = "Logout",
+                    onClick = onConfirm
+                )
+            }
+        }
     }
 }

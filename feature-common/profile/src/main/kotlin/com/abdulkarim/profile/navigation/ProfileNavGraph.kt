@@ -13,6 +13,10 @@ fun NavGraphBuilder.profileNavGraph(appNavigator: AppNavigator) {
         route = AppDestination.ProfileGraph.route
     ) {
 
-        composable(AppDestination.Profile.route) { ProfileScreen() }
+        composable(AppDestination.Profile.route) {
+            ProfileScreen(onNavigateToLogin = {
+                //appNavigator.navigate(AppDestination.LoginGraph)
+            })
+        }
     }
 }
