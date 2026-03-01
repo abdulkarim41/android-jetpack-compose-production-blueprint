@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.abdulkarim.desingsystem.component.AppButton
 import com.abdulkarim.desingsystem.component.AppOutlinedButton
+import com.abdulkarim.desingsystem.component.button.AppButton
 import com.abdulkarim.desingsystem.icon.AppIcons
 import com.abdulkarim.entity.auth.ProfileApiEntity
 
@@ -233,13 +234,13 @@ fun LogoutBottomSheet(
             Spacer(Modifier.height(16.dp))
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                AppOutlinedButton(
+                AppButton.Outlined(
                     modifier = Modifier.weight(1f),
                     text = "Cancel",
                     onClick = onDismiss
                 )
 
-                AppButton(
+                AppButton.Filled(
                     modifier = Modifier.weight(1f),
                     text = "Logout",
                     onClick = onConfirm
