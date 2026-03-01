@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -46,7 +47,7 @@ fun MainScreen(navigator: AppNavigator) {
                         selected = currentRoute(navController) == item.route,
                         onClick = {
                             navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId) {
+                                popUpTo(navController.graph.findStartDestination().id){
                                     saveState = true
                                 }
                                 launchSingleTop = true
