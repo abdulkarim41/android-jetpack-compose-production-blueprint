@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.abdulkarim.desingsystem.component.AppTextField
+import com.abdulkarim.desingsystem.component.button.AppButton
 import com.abdulkarim.domain.apiusecase.auth.PostLoginApiUseCase
 import com.abdulkarim.ui.NetworkErrorView
 import kotlinx.coroutines.launch
@@ -99,19 +97,20 @@ fun LoginScreen(
                 singleLine = true
             )
 
-            OutlinedTextField(
+            AppTextField(
                 value = password,
                 onValueChange = { password = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Password") },
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation()
+                //modifier = Modifier.fillMaxWidth(),
+                //label = { Text("Password") },
+                //singleLine = true,
+                //visualTransformation = PasswordVisualTransformation()
+                label = "Password"
             )
 
-            Button(
+            AppButton.Filled(
+                text = "Login",
                 onClick = {
                     scope.launch {
-
                         viewModel.onAction(LoginUiAction.PostLoginApiAction(
                             PostLoginApiUseCase.Params(
                                 username = "emilys",
@@ -119,22 +118,12 @@ fun LoginScreen(
                             )
                         ))
                     }
+
                 },
-                modifier = Modifier.fillMaxWidth()
-                    .padding(14.dp)
-                    .height(48.dp),
-                shape = MaterialTheme.shapes.small,
-                enabled = !isLoading
-            ) {
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
-                        strokeWidth = 2.dp
-                    )
-                } else {
-                    Text("Login")
-                }
-            }
+                modifier = Modifier.fillMaxWidth(),
+                isLoading = isLoading
+            )
+
         }
     }
 }
