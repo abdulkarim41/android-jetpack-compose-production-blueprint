@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,11 +18,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.abdulkarim.desingsystem.component.AppTextField
 import com.abdulkarim.desingsystem.component.button.AppButton
+import com.abdulkarim.desingsystem.component.textfield.AppTextField
+import com.abdulkarim.desingsystem.component.textfield.TextFieldType
 import com.abdulkarim.domain.apiusecase.auth.PostLoginApiUseCase
 import com.abdulkarim.ui.NetworkErrorView
 import kotlinx.coroutines.launch
@@ -89,21 +88,18 @@ fun LoginScreen(
                 style = MaterialTheme.typography.displaySmall
             )
 
-            OutlinedTextField(
+            AppTextField.Outlined(
+                modifier = Modifier.fillMaxWidth(),
                 value = email,
                 onValueChange = { email = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Email") },
-                singleLine = true
+                label = "Email",
             )
 
-            AppTextField(
+            AppTextField.Outlined(
+                modifier = Modifier.fillMaxWidth(),
                 value = password,
                 onValueChange = { password = it },
-                //modifier = Modifier.fillMaxWidth(),
-                //label = { Text("Password") },
-                //singleLine = true,
-                //visualTransformation = PasswordVisualTransformation()
+                type = TextFieldType.PASSWORD,
                 label = "Password"
             )
 
