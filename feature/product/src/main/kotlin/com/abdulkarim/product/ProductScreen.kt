@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.abdulkarim.desingsystem.component.card.AppCard
 import com.abdulkarim.desingsystem.icon.AppIcons
 import com.abdulkarim.entity.product.ProductApiEntity
 import com.abdulkarim.ui.NetworkErrorView
